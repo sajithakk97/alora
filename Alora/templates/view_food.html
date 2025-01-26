@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>food</title>
+</head>
+<body>
+    <a href="{% url 'add_food' %}" ><button>Add Food</button></a>
+    {% if data %}
+    {% for i in data %}
+    <div class="card" style="width: 18rem; padding-top: 20px;">
+        <img src="{{i.food_image.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p class="card-text">{{i.food_name}}<br> price:{{i.food_price}}</p>
+        </div>
+        <a href="{% url 'delete_food' id=i.id %}">delete</a>
+      </div>
+    {% endfor %}
+    {% else %}
+    <h1>Not</h1>
+    {% endif %}
+</body>
+</html>

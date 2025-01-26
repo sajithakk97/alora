@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form action="{% url 'add_decoration' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="img">Image</label>
+            <input type="file" name="img" required><br><br>
+            <label for="name">decoration name</label>
+            <input type="text" name="decoration_name" required><br><br>
+            <label for="price">Price</label>
+            <input type="number" name="price" required><br><br>
+            <button type="submit">ADD</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit</title>
+</head>
+<body>
+    <div>
+        <form method="POST" action="{% url 'edit' %}">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Name"  value="{{details.user_id.first_name}}"><br><br>
+            <input type="email" name="email" placeholder="Email" value="{{details.user_id.email}}">  <br><br>
+            <input type="tel" name="phone" placeholder="Phone Number" value="{{details.phone_number}}"><br><br>
+            Gender: <input type="radio" name="gender" value="Male" {% if details.gender == "Male" %}checked{% endif %}>
+            <label for="" >Male</label>&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="gender" value="Female" {% if details.gender == "Female" %}checked{% endif %}>
+            <label for="">Female</label>
+            <input type="radio" name="gender" value="Other" {% if details.gender == "Other" %}checked{% endif %}>
+            <label for="">Other</label><br><br>
+            <textarea name="address" placeholder="Address">{{details.address}}</textarea><br><br>
+            <input type="text" name="uname" placeholder="Username" value="{{details.user_id.username}}"><br><br>
+            <button type="submit">Edit</button><br><br>
+        </form>
+    </div>
+    
+</body>
+</html>

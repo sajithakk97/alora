@@ -1,0 +1,24 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>register</title>
+    </head>
+    <body>
+        <div>
+            <form method="POST" action="{% url 'add_hall' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h3>Add Hall</h3>
+                <input type="text" name="name" placeholder="Hall Name" required><br><br>
+                <textarea name="location" placeholder="Location"></textarea><br><br>
+                <input type="number" name="capacity" placeholder="capacity" required><br><br>
+                <input type="number" name="price" placeholder="Price per Day" required><br><br>
+                <textarea name="description" placeholder="Describe about hall"></textarea><br><br>
+                <input type="file" name="image" ><br><br>
+                <button type="submit">Add</button><br><br>
+            </form>
+        </div>
+        
+    </body>
+    </html>

@@ -1,0 +1,58 @@
+<form action="{% url 'book' %}" method="post">
+    {% csrf_token %}
+    <label for="date">Select Date:</label>
+    <input type="date" name="date" required><br><br>
+
+    <label for="hall">Halls:</label>
+    {% for i in data %}
+        <label>
+            <input type="radio" name="hall" value="{{ i.id }}" required>
+            <img src="{{ i.photo_url.url }}" alt="" style="height: 200px; width: 200px;">
+            <p>Price: {{ i.price_per_day }} (People: {{ i.capacity }})</p>
+        </label>
+    {% endfor %}
+    <br><br>
+
+    <label for="food">Food:</label>
+    <input type="radio" name="food1" value="True" required> Yes
+    <input type="radio" name="food1" value="False" required> No
+    <br><br>
+
+    <label>If yes, select food:</label>
+    {% for food in foods %}
+        <label>
+            <input type="radio" name="food2" value="{{ food.id }}">
+            <img src="{{ food.food_image.url }}" alt="food" style="height: 200px; width: 200px;">
+            <p>Price: {{ food.food_price }} per person</p>
+        </label>
+    {% endfor %}
+    <br><br>
+
+    <label for="suggestion">Add your suggestion:</label>
+    <textarea name="suggestion"></textarea><br><br>
+
+    <label>Number of people:</label>
+    <input type="number" name="people_num" required><br><br>
+
+    <label>Do you want Photography:</label>
+    <input type="radio" name="photography" value="True"> Yes
+    <input type="radio" name="photography" value="False"> No
+    <br><br>
+
+    <label for="decoration">Decoration:</label>
+    <input type="radio" name="decoration1" value="True"> Yes
+    <input type="radio" name="decoration1" value="False"> No
+    <br><br>
+
+    <label>If yes, select decoration:</label>
+    {% for dec in decoration %}
+        <label>
+            <input type="radio" name="decoration_model" value="{{ dec.id }}">
+            <img src="{{ dec.decoration_image.url }}" alt="" style="height: 200px; width: 200px;">
+            <p>Price: {{ dec.decoration_price }}</p>
+        </label>
+    {% endfor %}
+    <br><br>
+
+    <button type="submit">Book</button>
+</form>
