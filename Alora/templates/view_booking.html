@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if events %}
+    <table>
+        <tr>
+            <th>Hall</th>
+            <th>Customer</th>
+            <th>Booking date</th>
+            <th>Suggestions</th>
+            <th>Event Date</th>
+            <th>Total cost</th>
+            <th>payment status</th>
+            <th>Booking status</th>
+    
+        </tr>
+        {% for i in events %}
+        <tr>
+            <td>{{i.hall_id.name}}</td>
+            <td>{{i.customer_id.username}}</td>
+            <td>{{i.booking_date}}</td>
+            <td>{{i.suggestion}}</td>
+            <td>{{i.event_date}}</td>
+            <td>{{i.total_cost}}</td>
+            <td>{{i.payment_status}}</td>
+            <td>
+                <form action="{% url 'set_status' id=i.id %}" method="post">
+                {% csrf_token %}
+                {% if i.status == 'pending' %}
+                    <input type="submit" name="status1" value="Accept">
+                    <input type="submit" name="status1" value="Reject">
+                
+                {% elif i.status == 'accepted' %}
+
+                <input type="submit" name="status1" value="Reject">
+                {% else %}
+                <input type="submit" name="status1" value="Accept">
+                {% endif %}
+            </form>
+                
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>

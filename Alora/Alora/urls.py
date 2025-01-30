@@ -32,6 +32,12 @@ urlpatterns = [
     path('verify_otp',views.Verify_otp,name='verify_otp'),
     path('set_new_password',views.Set_new_password,name='set_new_password'),
     path('book',views.Book_hall,name='book'),
+    path('logout',views.Logout,name='logout'),
+    path('view_user_booking',views.View_user_booking,name='view_user_booking'),
+    path('set_payment_status/<int:id>',views.Set_payment_status,name='set_payment_status'),
+    path('cash_pay/<int:id>',views.Cash_pay,name='cash_pay'),
+   
+    
 
 
 
@@ -48,7 +54,9 @@ urlpatterns = [
     path('view_decoration',views.View_decoration,name='view_decoration'),
     path('add_decoration',views.Add_decoration,name='add_decoration'),
     path('delete_decoration/<int:id>',views.Delete_decoration,name='delete_decoration'),
+    path('view_booking',views.View_booking,name='view_booking'),
     path('hi',views.index1,name='hai'),
+    path('set_status/<int:id>',views.set_status,name='set_status'),
     
 ]
 if settings.DEBUG:

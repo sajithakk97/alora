@@ -1,4 +1,74 @@
 .name{
     font-family: 'Irish Grover', cursive;
     font-weight: bolder;
-}
+  }
+  .know{
+      font-style: italic;
+      background-color: rgb(247, 237, 238);
+
+  }
+  .venue,.decore,.photography,.catering{
+    position: absolute;
+    top: 5px;
+    left: 25%;
+    font-size: 25px;
+    color: black;
+  }
+  .planner{
+    font-family: 'Irish Grover', cursive;
+    font-weight: bolder;
+    font-size: 40px;
+  }
+  .planner1{
+    font-family: 'Island Moments', cursive;
+    font-size: 20px;
+  }
+  .buttons{
+    background-color: rgba(104, 60, 60, 0.5);
+  }
+  .buttons:hover{
+    background-color: rgba(83, 6, 6, 0.5);
+    
+  }
+  .main2{
+    background-color: rgb(232, 218, 214);
+  }
+  .p1{
+    font-family: "Georgia", "Times New Roman", serif; 
+    font-style: italic; 
+    font-size: 1.2rem; 
+  }
+  .p2{
+    font-family: 'Darker Grotesque', sans-serif;
+  }
+  .logo {
+    
+    width: 30px; 
+    height: 30px; 
+  }
+  .logo1{
+    width: 50px;
+    height: 50px;
+  }
+  .footer-copyright {
+    background-color: #343a40; /* Dark background */
+    color: #fff; /* White text */
+    padding: 10px 0;
+    font-size:0.9rem;
+  }
+  
+  @media screen and (max_width:200px){
+    .image1{
+      width: 10px;
+      height: 100px;
+
+    }
+    
+  }
+
+  .main10{
+    background-color: aqua;
+  }
+  body{
+    background-color: black;
+  }

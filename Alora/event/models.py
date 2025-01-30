@@ -17,17 +17,23 @@ class Hall(models.Model):
     price_per_day=models.DecimalField(max_digits=10,decimal_places=2)
     photo_url=models.FileField()
     description=models.TextField()
+    def __str__(self):
+        return self.name
 
 
 class Food(models.Model):
     food_image=models.FileField()
     food_name=models.CharField(max_length=100)
     food_price=models.DecimalField(max_digits=10,decimal_places=2)
+    def __str__(self):
+        return self.food_name
 
 class Decoration(models.Model):
     decoration_image=models.FileField()
     decoration_name=models.CharField(max_length=200,null=True,blank=True)
     decoration_price=models.DecimalField(max_digits=10,decimal_places=2)
+    def __str__(self):
+        return self.decoration_name
 
 class Booking(models.Model):
     hall_id=models.ForeignKey(Hall,on_delete=models.CASCADE)
@@ -45,6 +51,9 @@ class Booking(models.Model):
     event_date=models.DateField(null=True,blank=True)
     status=models.CharField(max_length=20,default='pending',null=True,blank=True)
     number=models.IntegerField(null=True,blank=True)
+
+    def __str__(self):
+        return self.event_date
 
 
     

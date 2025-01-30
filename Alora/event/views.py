@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.contrib import messages
 import random
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 def Index(request):
     return render(request,'index.html')
 def Register(request):
@@ -21,16 +22,16 @@ def Register(request):
         if(password==password2):
             if (User.objects.filter(email=email).exists()):
                 error='Email is already in use'
-                return render(request,'register.html',{'error':error})
+                return render(request,'register1.html',{'error':error})
             data=User.objects.create_user(username=username,email=email,first_name=name,password=password)
         else:
             msg='password do not match '
-            return render(request,'register.html',{'message':msg})
+            return render(request,'register1.html',{'message':msg})
         
         user=User_details.objects.create(phone_number=phone,gender=gender,address=address,user_id=data)
         data.save()
         return redirect('login')
-    return render(request,'register.html')
+    return render(request,'register1.html')
 def User_home(request):
     return render(request,'user_home.html')
 def Login(request):
@@ -53,7 +54,6 @@ def Login(request):
 def Profile(request):
     data=User.objects.get(id=request.user.id)
     user=User_details.objects.get(user_id=data)
-    print(data)
     return render(request,'profile.html',{'details':user})
 
 def Edit(request):
@@ -125,6 +125,7 @@ def Book_hall(request):
     food = Food.objects.all()
     decorations = Decoration.objects.all()
     user = User.objects.get(id=request.user.id)
+    event_hall_book=Booking.objects.all()
     context = {
         'data': hall,
         'foods': food,
@@ -155,7 +156,9 @@ def Book_hall(request):
             total_cost += 10000
         if decoration == 'True' and decoration_model:
             total_cost += decoration_id.decoration_price 
-        
+        if Booking.objects.filter(event_date=date, hall_id=hall_id,status='accepted').exists():
+            msg = 'The hall is already booked for the selected date. Please choose another hall or date.'
+            return render(request, 'book.html', {'msg': msg})
         data = Booking.objects.create(
             customer_id=user,
             hall_id=hall_id,
@@ -171,13 +174,55 @@ def Book_hall(request):
             number=people_num
         )
         data.save()
-        return HttpResponse('success')
+        return redirect('view_user_booking')
     
-    return render(request, 'book.html', context)
+    return render(request, 'book1.html', context)
+def View_booking(request):
+    event_booking=Booking.objects.all()
+    return render(request,'view_booking.html',{'events':event_booking})
 def index1(request):
-    return render(request,'base.html')
+    return render(request,'alora_user.html')
 
+def Logout(request):
+    auth.logout(request)
+    return redirect('login')
 
+def View_user_booking(request):
+    data=User.objects.get(id=request.user.id)
+    user=Booking.objects.filter(customer_id=data)
+    return render(request,'view_user_booking.html',{'details':user})
+
+import stripe
+from django.conf import settings 
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def Set_payment_status(request,id):
+    try:
+        cart_item=Booking.objects.get(id=id)
+        total_amount = cart_item.total_cost
+
+        intent = stripe.PaymentIntent.create(
+            amount=int(total_amount*100),
+            currency="usd",
+            metadata={"data":cart_item.id,"user_id":request.user.id},
+
+        )
+        context = {
+            'client_secret': intent.client_secret,
+            'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY,
+            'total_amount':total_amount,
+            'cart_item':cart_item,
+        }
+        return render(request,'stripe_payment.html',context)
+    except Booking.DoesNotExist:
+        return redirect(View_user_booking)
+    
+def Cash_pay(request,id):
+    data=Booking.objects.get(id=id)
+    data.payment_status = "completed"
+    data.save()
+    return redirect(View_user_booking)
 
 
 
@@ -193,7 +238,22 @@ def View_user(request):
 
 def View_hall(request):
     halls=Hall.objects.all()
-    return render(request,'view_hall.html',{'data':halls})
+    items_per_page=1
+    paginator=Paginator(halls,items_per_page)
+    page=request.GET.get('page',1)
+
+    try:
+        halls=paginator.page(page)
+    except PageNotAnInteger:
+        halls=paginator.page(1)
+    except EmptyPage:
+        halls=paginator.page(paginator.num_pages) 
+    context={
+        'data':halls,
+    }
+    return render(request,'view_hall.html',context)
+
+
 def Add_hall(request):
     if request.method=='POST':
         name=request.POST['name']
@@ -253,7 +313,17 @@ def Delete_decoration(request,id):
     decoration=Decoration.objects.get(id=id)
     decoration.delete()
     return redirect('view_decoration')
-
+def set_status(request,id):
+    data=Booking.objects.get(id=id)
+    if request.method=='POST':
+        status=request.POST['status1']
+        if status=='Accept':
+            data.status='accepted'
+        elif status=='Reject':
+            data.status='rejected'
+        data.save()
+        return redirect('view_booking')
+    return redirect('view_booking')
 
 
     
