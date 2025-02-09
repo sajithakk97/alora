@@ -1,24 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>food</title>
-</head>
-<body>
-    <a href="{% url 'add_food' %}" ><button>Add Food</button></a>
+<style>
+    .container{
+        overflow-y: scroll;
+        height: 450px;
+    }
+</style>
+{% extends 'admin_home.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content ps-4">
+    <!-- Add Food Button -->
+    <div class="d-flex justify-content-end mt-3 me-2">
+        <a href="{% url 'add_food' %}" class="btn btn-primary text-decoration-none">Add Food</a>
+    </div>
+
     {% if data %}
-    {% for i in data %}
-    <div class="card" style="width: 18rem; padding-top: 20px;">
-        <img src="{{i.food_image.url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <p class="card-text">{{i.food_name}}<br> price:{{i.food_price}}</p>
+    <div class="container mt-4 ">
+        <div class="row">
+            {% for i in data %}
+            <div class="col-md-4 mb-4 d-flex justify-content-center"> <!-- 3 cards per row -->
+                <div class="card" style="width: 18rem; padding-top: 20px;">
+                    <img src="{{ i.food_image.url }}" class="card-img-top" alt="{{ i.food_name }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <p class="card-text fw-bold">{{ i.food_name }}</p>
+                        <p class="card-text text-muted">Price: ${{ i.food_price }}</p>
+                        <a href="{% url 'delete_food' id=i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <a href="{% url 'delete_food' id=i.id %}">delete</a>
-      </div>
-    {% endfor %}
+    </div>
     {% else %}
-    <h1>Not</h1>
+    <div class="container text-center mt-5">
+        <h3 class="text-muted">No Food Items Available</h3>
+    </div>
     {% endif %}
-</body>
-</html>
+</div>
+
+{% endblock content %}

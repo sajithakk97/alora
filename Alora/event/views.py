@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from django.contrib import messages
 import random
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.db.models import Sum
+from django.db.models import Q
 def Index(request):
     return render(request,'index.html')
 def Register(request):
@@ -22,18 +24,18 @@ def Register(request):
         if(password==password2):
             if (User.objects.filter(email=email).exists()):
                 error='Email is already in use'
-                return render(request,'register1.html',{'error':error})
+                return render(request,'register.html',{'error':error})
             data=User.objects.create_user(username=username,email=email,first_name=name,password=password)
         else:
-            msg='password do not match '
-            return render(request,'register1.html',{'message':msg})
+            msg='password does not match '
+            return render(request,'register.html',{'message':msg})
         
         user=User_details.objects.create(phone_number=phone,gender=gender,address=address,user_id=data)
         data.save()
         return redirect('login')
-    return render(request,'register1.html')
+    return render(request,'register.html')
 def User_home(request):
-    return render(request,'user_home.html')
+    return render(request,'alora_user.html')
 def Login(request):
     if request.method=='POST':
         username=request.POST['username']
@@ -176,7 +178,7 @@ def Book_hall(request):
         data.save()
         return redirect('view_user_booking')
     
-    return render(request, 'book1.html', context)
+    return render(request, 'book.html', context)
 def View_booking(request):
     event_booking=Booking.objects.all()
     return render(request,'view_booking.html',{'events':event_booking})
@@ -188,8 +190,11 @@ def Logout(request):
     return redirect('login')
 
 def View_user_booking(request):
-    data=User.objects.get(id=request.user.id)
-    user=Booking.objects.filter(customer_id=data)
+    data=User.objects.get(id=request.user.id)  # No need to fetch User object again
+
+    
+    user=Booking.objects.filter(customer_id=data).filter(Q(status='accepted') | Q(status='pending'))
+
     return render(request,'view_user_booking.html',{'details':user})
 
 import stripe
@@ -230,7 +235,12 @@ def Cash_pay(request,id):
 
 #admin........................
 def Admin_home(request):
-    return render(request,'admin_home.html')
+    total_halls=Hall.objects.count()
+    total_booking=Booking.objects.count()
+    revenue=Booking.objects.all()
+    total_revenue = Booking.objects.aggregate(total_revenue=Sum('total_cost'))['total_revenue'] or 0
+    context={'total_halls':total_halls,'total_booking':total_booking,'total_revenue':total_revenue}
+    return render(request,'admin_home.html',context)
 
 def View_user(request):
     data=User_details.objects.all()
@@ -238,7 +248,7 @@ def View_user(request):
 
 def View_hall(request):
     halls=Hall.objects.all()
-    items_per_page=1
+    items_per_page=2
     paginator=Paginator(halls,items_per_page)
     page=request.GET.get('page',1)
 

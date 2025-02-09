@@ -1,73 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% if msg %}
-    {{msg}}
-    {% endif %}
-    <form action="{% url 'book' %}" method="post">
-        {% csrf_token %}
-        <label for="date">Select Date:</label>
-        <input type="date" name="date" required><br><br>
-    
-        <label for="hall">Halls:</label>
-        {% for i in data %}
-            <label>
-                <input type="radio" name="hall" value="{{ i.id }}" required>
-                <img src="{{ i.photo_url.url }}" alt="" style="height: 200px; width: 200px;">
-                <p>Price: {{ i.price_per_day }} (People: {{ i.capacity }})</p>
-            </label>
-        {% endfor %}
-        <br><br>
-    
-        <label for="food">Food:</label>
-        <input type="radio" name="food1" value="True" required> Yes
-        <input type="radio" name="food1" value="False" required> No
-        <br><br>
-    
-        <label>If yes, select food:</label>
-        {% for food in foods %}
-            <label>
-                <input type="radio" name="food2" value="{{ food.id }}">
-                <img src="{{ food.food_image.url }}" alt="food" style="height: 200px; width: 200px;">
-                <p>Price: {{ food.food_price }} per person</p>
-            </label>
-        {% endfor %}
-        <br><br>
-    
-        <label for="suggestion">Add your suggestion:</label>
-        <textarea name="suggestion"></textarea><br><br>
-    
-        <label>Number of people:</label>
-        <input type="number" name="people_num" required><br><br>
-    
-        <label>Do you want Photography:</label>
-        <input type="radio" name="photography" value="True"> Yes
-        <input type="radio" name="photography" value="False"> No
-        <br><br>
-    
-        <label for="decoration">Decoration:</label>
-        <input type="radio" name="decoration1" value="True"> Yes
-        <input type="radio" name="decoration1" value="False"> No
-        <br><br>
-    
-        <label>If yes, select decoration:</label>
-        {% for dec in decoration %}
-            <label>
-                <input type="radio" name="decoration_model" value="{{ dec.id }}">
-                <img src="{{ dec.decoration_image.url }}" alt="" style="height: 200px; width: 200px;">
-                <p>Price: {{ dec.decoration_price }}</p>
-            </label>
-        {% endfor %}
-        <br><br>
-    
-        <button type="submit">Book</button>
-    </form>
-    
-    
-</body>
-</html>
+
+{% extends 'alora_user.html' %}
+{% load static %}
+{% block content %}
+<div class="main2">
+    <div class="row pt-4">
+        <div class="col-sm-4 border-end border-3 border-dark ">
+            <div class="d-flex ms-2">
+                <div><img src="{% static 'img/wwd.png' %}" class="d-block w-100 pt-2 h-100 pe-2 " alt="" ></div>
+                <div>
+                    <img src="{% static 'img/haldi2.png' %}" class="d-block w-100 pt-2 h-50 pe-2 " alt="" >
+                    <img src="{% static 'img/bday2.png' %}" class="d-block w-100 pt-2 h-50 pe-2 " alt="" >
+                </div>
+            </div>
+            <div class="d-flex ms-2">
+                <div><img src="{% static 'img/corporate1.png' %}" class="d-block w-100 pt-2 h-50 pe-2 " alt="" >
+                    <img src="{% static 'img/gallery1.png' %}" class="d-block w-100 pt-2 h-50 pe-2 " alt="" ></div>
+                <div>
+                    <img src="{% static 'img/wed5.jpg' %}" class="d-block w-100 pt-2 h-100 pe-2 " alt="" >
+                </div>
+            </div>
+            <div class="ms-2">
+                <img src="{% static 'img/img1.png' %}" class="d-block w-100 pt-2 h-100 pe-2 " alt="" >
+            </div>
+            <div class="d-flex ms-2">
+                <div>
+                    <img src="{% static 'img/img7.png' %}" class="d-block w-100 pt-2 h-100 pe-2 " alt="" >
+                </div>
+                <div>
+                    <img src="{% static 'img/download.png' %}" class="d-block w-100 pt-2 h-50 pe-2 " alt="" >
+                    <img src="{% static 'img/img8.png' %}" class="d-block w-100 pt-2 h-50 pe-2 " alt="" >
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 ps-5">
+            <div class="pb-4">
+            <h2 class="text-center">Hall Booking</h2>
+        </div>
+            {% if msg %}
+            {{msg}}
+            {% endif %}
+            <form action="{% url 'book' %}" method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="date" class="form-label required"><b>Select Date</b></label>
+                    <input type="date" name="date" required class="w-50"><br><br>
+                </div>
+            
+                <label for="hall" class="form-label required"><b>Halls</b></label><br>
+                <div class="main3" >
+                {% for i in data %}
+                    <label class="position-relative" >
+                        <input type="radio" name="hall" value="{{ i.id }}" required class="position-absolute hall">
+                        <div class="d-flex p-1">
+                            <img src="{{ i.photo_url.url }}" alt="" style="height: 170px; width: 200px;">
+                        </div>
+                        <p class=" hall1">Price: {{ i.price_per_day }}<br> (People: {{ i.capacity }})</p>
+                    </label>
+                {% endfor %}
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="food" class="form-label required "><b>Food</b></label>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-check form-check-inline ">
+                            <input class="form-check-input" type="radio" name="food1" id="yesOption" value="True"  required>
+                            <label class="form-check-label" for="yesOption">Yes</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="food1" id="noOption" value="False">
+                            <label class="form-check-label" for="noOption">No</label>
+                          </div><br>
+                        </div>
+                </div>
+               
+                <label class="form-label ">If yes, select food:</label><br><br>
+                <div class="main4">
+                {% for food in foods %}
+                    <label class="position-relative">
+                        <input type="checkbox" name="food2" value="{{ food.id }}" class="position-absolute food_items ">
+                        <div>
+                        <img src="{{ food.food_image.url }}" alt="food" style="height: 170px; width: 200px;" class=" pb-1">
+                    </div>
+                        <p class="food_items1 text-white">{{ food.food_name }}<br> ({{ food.food_price }} per person)</p>
+                    </label>
+                {% endfor %}
+                </div>
+                <br><br>
+
+                <label class="form-label required"><b>Number of people</b></label>
+                <input type="number" name="people_num" required class="w-50 form-input"><br><br>
+
+                <div class="row">
+                    <div class="col-sm-3"><label class="form-label  "><b>Photography :</b></label>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-check form-check-inline ">
+                            <input class="form-check-input" type="radio" name="photography" id="yesOption" value="True"  >
+                            <label class="form-check-label" for="yesOption">Yes</label>
+                          </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="photography" id="noOption" value="False">
+                            <label class="form-check-label" for="noOption">No</label>
+                          </div>
+                    </div>
+                </div>
+                
+                
+                  <br><br>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="form-label"><b>Decoration :</b></label>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-check form-check-inline ">
+                            <input class="form-check-input" type="radio" name="decoration1" id="yesOption" value="True"  >
+                            <label class="form-check-label" for="yesOption">Yes</label>
+                          </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="decoration1" id="noOption" value="False">
+                            <label class="form-check-label" for="noOption">No</label>
+                          </div>
+                    </div>
+                </div>
+                  <br><br>
+
+                <label class="form-label ">If yes, select decoration:</label>
+                <div class="main5">
+                {% for dec in decoration %}
+                    <label class="position-relative">
+                        <input type="radio" name="decoration_model" value="{{ dec.id }}" class="position-absolute decoration_items">
+                        <div>
+                        <img src="{{ dec.decoration_image.url }}" alt="" style="height: 170px; width: 200px;">
+                        </div>
+                        <p class="decoration_items1 text-dark"> {{ dec.decoration_name }}<br>({{ dec.decoration_price }}) </p>
+                    </label>
+                {% endfor %}
+                </div>
+                <br><br>
+            
+                <label for="suggestion" class="form-label"><b>Add your suggestion :</b></label>
+                <textarea name="suggestion" class="form-text w-50"></textarea><br><br>
+
+                <div class="d-grid gap-2 col-6 mx-auto w-25">
+                    <button class="btn btn-success" type="submit">Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

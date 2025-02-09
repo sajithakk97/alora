@@ -4,35 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-image: url('../img/wed5.jpg');
+            font-family: 'Arial', sans-serif;
+        }
+        .form-container {
+            max-width: 450px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: black;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+        }
+        .btn-primary {
+            border: none;
+            border-radius: 10px;
+        }
+        .btn-primary:hover {
+            background-color: #2575fc;
+        }
+        .password-container {
+            position: relative;
+        }
+        .password-container i {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function togglePassword(fieldId) {
+            var field = document.getElementById(fieldId);
+            var icon = document.getElementById(fieldId + "-icon");
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                field.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+            var errorMessage = document.getElementById("password-error");
+
+            if (password !== confirmPassword) {
+                errorMessage.innerHTML = "Passwords do not match!";
+                return false;
+            } else {
+                errorMessage.innerHTML = "";
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
-    <div>
-        {% if message %}
+
+<div class="container">
+    <div class="form-container">
+        <div class="" style="color: red; text-align: center;">
+            {% if message %}
             {{message}}<br><br>
         {% endif %}
         {% if error %}
             {{error}}
         {% endif %}
-        <form method="POST" action="{% url 'register' %}">
+        </div>
+        <h2>User Registration</h2>
+        <form onsubmit="return validatePassword()" method="POST" action="{% url 'register'%}">
             {% csrf_token %}
-            <h3>User Registration</h3>
-            <input type="text" name="name" placeholder="Name" required><br><br>
-            <input type="email" name="email" placeholder="Email" required><br><br>
-            <input type="tel" name="phone" placeholder="Phone Number" required><br><br>
-            Gender: <input type="radio" name="gender" value="Male">
-            <label for="" >Male</label>&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="gender" value="Female">
-            <label for="">Female</label>
-            <input type="radio" name="gender" value="Other">
-            <label for="">Other</label><br><br>
-            <textarea name="address" placeholder="Address"></textarea><br><br>
-            <input type="text" name="uname" placeholder="Username" required><br><br>
-            <input type="password" name="password" placeholder="Password" required><br><br>
-            <input type="password" name="cpass" placeholder="Confirm Password" required><br><br>
-            <button type="submit">Register</button><br><br>
-            <span>Already Registered? <a href="{% url 'login' %}">Login</a></span>
+            
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" placeholder="Enter username" name="uname" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="Enter email" name="email" required>
+            </div>
+
+            
+            <div class="mb-3 password-container">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+                <i class="fas fa-eye" id="password-icon" onclick="togglePassword('password')"></i>
+            </div>
+
+            
+            <div class="mb-3 password-container">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password" name="cpass" required>
+                <i class="fas fa-eye" id="confirm-password-icon" onclick="togglePassword('confirm-password')"></i>
+                <small id="password-error" class="text-danger"></small>
+            </div>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" placeholder="Enter full name" name="name" required>
+            </div>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" rows="3" placeholder="Enter your address" name="address" required></textarea>
+            </div>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Enter phone number" name="phone" required>
+            </div>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female" required>
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="Other" required>
+                    <label class="form-check-label" for="other">Other</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
         </form>
+        <div class="mt-3">
+        <span>Already Registered? <a href="{% url 'login' %}">Login</a></span>
     </div>
-    
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

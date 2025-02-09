@@ -1,28 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>edit</title>
-</head>
-<body>
-    <div>
-        <form method="POST" action="{% url 'edit' %}">
-            {% csrf_token %}
-            <input type="text" name="name" placeholder="Name"  value="{{details.user_id.first_name}}"><br><br>
-            <input type="email" name="email" placeholder="Email" value="{{details.user_id.email}}">  <br><br>
-            <input type="tel" name="phone" placeholder="Phone Number" value="{{details.phone_number}}"><br><br>
-            Gender: <input type="radio" name="gender" value="Male" {% if details.gender == "Male" %}checked{% endif %}>
-            <label for="" >Male</label>&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="gender" value="Female" {% if details.gender == "Female" %}checked{% endif %}>
-            <label for="">Female</label>
-            <input type="radio" name="gender" value="Other" {% if details.gender == "Other" %}checked{% endif %}>
-            <label for="">Other</label><br><br>
-            <textarea name="address" placeholder="Address">{{details.address}}</textarea><br><br>
-            <input type="text" name="uname" placeholder="Username" value="{{details.user_id.username}}"><br><br>
-            <button type="submit">Edit</button><br><br>
-        </form>
+{% extends 'alora_user.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        body {
+            background-color: white;
+        }
+        .profile-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #E8DAD6;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .profile-img {
+            width: 100px;  
+            height: 100px; 
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        .profile-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-save {
+            background: #007bff;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .btn-save:hover {
+            background: #0056b3;
+        }
+    </style>
+
+    <div class="container profile-container">
+        <div class="row">
+            <!-- Profile Section -->
+            <div class="col-md-4 text-center">
+                <div class="profile-img">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                    </svg>
+                </div>
+                <h4>{{ details.user_id.username }}</h4>
+                <p>{{ details.user_id.email }}</p>
+            </div>
+            <div class="col-md-8">
+                <h4>Profile Settings</h4>
+                <form method="POST" action="{% url 'edit' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-label">User Name</label>
+                            <input type="text" class="form-control" value="{{ details.user_id.username }}" name="uname">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" value="{{ details.user_id.first_name }}" name="name">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="text" class="form-control" value="{{ details.phone_number }}" name="phone">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label">Email ID</label>
+                            <input type="email" class="form-control" value="{{ details.user_id.email }}" name="email">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" value="{{ details.address }}" name="address">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label">Gender</label><br>
+                            <input type="radio" name="gender" value="Male" {% if details.gender == "Male" %}checked{% endif %}>
+                            <label>Male</label>&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="gender" value="Female" {% if details.gender == "Female" %}checked{% endif %}>
+                            <label>Female</label>&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="gender" value="Other" {% if details.gender == "Other" %}checked{% endif %}>
+                            <label>Other</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-save mt-5">Save Changes</button>
+                </form>
+            </div>
+        </div>
     </div>
-    
-</body>
-</html>
+{% endblock content %}

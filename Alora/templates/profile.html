@@ -1,18 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h4>Profile</h4>
-    <h5>Username:{{details.user_id.username}}</h5>
-    <h5>Name:{{details.user_id.first_name}}</h5>
-    <h5>Email:{{details.user_id.email}}</h5>
-    <h5>Address:{{details.address}}</h5>
-    <h5>Gender:{{details.gender}}</h5>
-    <a href="{% url 'edit'  %}"><button>Edit details</button></a>
-    <a href="{% url 'logout' %}"><button>Logout</button></a>
-</body>
-</html>
+{% extends 'alora_user.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+    </style>
+
+
+    <div class="container profile-container">
+        
+        <h3>{{details.user_id.username}}</h3>
+        <p class="text-muted">{{details.user_id.email}}</p>
+        <p><i class="fas fa-envelope"></i> {{details.address}}</p>
+        <p><i class="fas fa-phone"></i> {{details.phone_number}}</p>
+        <div class="d-flex justify-content-around ">
+        <a href="{% url 'edit'  %}"><button type="button" class="btn btn-primary btn-lg">Profile Details</button></a>
+        <a href="{% url 'logout' %}"><button type="button" class="btn btn-danger btn-lg"> Logout</button></a>
+        </div>
+            
+    </div>
+    {% endblock content %}
+

@@ -52,8 +52,7 @@ class Booking(models.Model):
     status=models.CharField(max_length=20,default='pending',null=True,blank=True)
     number=models.IntegerField(null=True,blank=True)
 
-    def __str__(self):
-        return self.event_date
+   
 
 
     

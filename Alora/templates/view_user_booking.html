@@ -1,45 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% if details %}
-    <table>
-        <tr>
-            <th>Hall</th>
-            <th>Customer</th>
-            <th>Booking date</th>
-            <th>Event Date</th>
-            <th>Total cost</th>
-            <th>payment status</th>
-            <th>Booking status</th>
-    
-        </tr>
-        {% for i in details %}
-        <tr>
-            <td>{{i.hall_id.name}}</td>
-            <td>{{i.customer_id.username}}</td>
-            <td>{{i.booking_date}}</td>
-            <td>{{i.event_date}}</td>
-            <td>{{i.total_cost}}</td>
-            <td>{{i.payment_status}}</td>
-            <td>{{i.status}}</td>
-            <td>
+{% extends 'alora_user.html' %}
+{% load static %}
+{% block content %}
+{% if details %}
+<div class="row main2 p-4">
+    {% for i in details %}
+    <div class="col-sm-4 pb-3 d-flex justify-content-center align-content-center">
+        <div class="card" style="width: 18rem;">
+            <img src="{{i.hall_id.photo_url.url}}" class="card-img-top " alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">{{i.hall_id.name}}</h5>
+              <p class="card-text text-center"><b>Event Date :</b>{{i.event_date}}</p>
+              
                 <form action="{% url 'set_payment_status' id=i.id %}" method="post">
-                {% csrf_token %}
-                {% if i.status == 'accepted' and i.payment_status == 'pending' %}
-                    <input type="submit" name="payment" value="pay">
-                {% elif i.payment_status == 'completed' %}
-                <p>completed</p>
-                {% endif %}
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
-</body>
-</html>
+                    {% csrf_token %}
+                    {% if i.status == 'accepted' and i.payment_status == 'pending' %}
+                    <button type="submit" class="btn btn-primary " name="payment" value="pay" >Pay</button>
+                    {% elif i.payment_status == 'completed' %}
+                    <p class="text-center text-success"><b>Success</b> </p>
+                    {% endif %}
+                    </form>
+              
+            </div>
+          </div>
+    </div>
+    
+    
+    {% endfor %}
+
+</div>
+{% endif %}
+{% endblock content %}
