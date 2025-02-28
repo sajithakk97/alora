@@ -182,8 +182,6 @@ def Book_hall(request):
 def View_booking(request):
     event_booking=Booking.objects.all()
     return render(request,'view_booking.html',{'events':event_booking})
-def index1(request):
-    return render(request,'alora_user.html')
 
 def Logout(request):
     auth.logout(request)
@@ -196,6 +194,18 @@ def View_user_booking(request):
     user=Booking.objects.filter(customer_id=data).filter(Q(status='accepted') | Q(status='pending'))
 
     return render(request,'view_user_booking.html',{'details':user})
+
+def Service(request):
+    return render(request,'service.html')
+
+def About(request):
+    return render(request,'about.html')
+
+def Gallery(request):
+    return render(request,'gallery.html')
+
+def Testimonial(request):
+    return render(request,'testimonial.html')
 
 import stripe
 from django.conf import settings 

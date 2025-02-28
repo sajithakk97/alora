@@ -36,6 +36,10 @@ urlpatterns = [
     path('view_user_booking',views.View_user_booking,name='view_user_booking'),
     path('set_payment_status/<int:id>',views.Set_payment_status,name='set_payment_status'),
     path('cash_pay/<int:id>',views.Cash_pay,name='cash_pay'),
+    path('service',views.Service,name='service'),
+    path('about',views.About,name='about'),
+    path('gallery',views.Gallery,name='gallery'),
+    path('testimonials',views.Testimonial,name='testimonial'),
    
     
 
@@ -55,7 +59,6 @@ urlpatterns = [
     path('add_decoration',views.Add_decoration,name='add_decoration'),
     path('delete_decoration/<int:id>',views.Delete_decoration,name='delete_decoration'),
     path('view_booking',views.View_booking,name='view_booking'),
-    path('hi',views.index1,name='hai'),
     path('set_status/<int:id>',views.set_status,name='set_status'),
     
 ]

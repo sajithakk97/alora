@@ -10,9 +10,73 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-      
+      .test1, .test2,.test3,.test4 {
+        background-color: rgb(232, 218, 214);
+    }
+        img.img-fluid {
+      height: 300px; /* Set a fixed height */
+      object-fit: cover; /* Ensures the image scales while maintaining its aspect ratio */
+      width: 100%; /* Ensures it spans the full width of the column */
+  }
+      .gallery{
+        height: 100vh;
+        left: 5%;
+        top:80%;
+        font-family: 'Inknut Antiqua', serif;
+      }
+      .box1_p,.vision p,.mission p{
+        font-family: 'Josefin Slab', serif;
+      }
+      .box1 h2,.vision h2,.mission h2{
+        font-family:'Italiana', serif;
+      }
+      .box1 ,.vision,.mission{
+        padding: 20px;
+        border-radius: 5px;
+        background:rgb(163, 163, 163);
+      }
+      .about_main{
+        height: 400px;
+        width: 500px;
+        position: relative;
+      }
+      .about1 {
+          position:absolute;
+          height: 60%;
+          width: 30%;
+          top: 10%;
+          left:10%;
+          background:rgb(185, 181, 181);
+      }
+      .about1 img{
+        height: 120%;
+        width: 120%;
+        position:absolute;
+        top: 8%;
+        left:18%;
+      }
+      .about2{
+        position:absolute;
+        height: 30%;
+        width: 30%;
+        background:rgb(185, 181, 181);
+        top: 65%;
+        left:30%;
+      }
+      .about2 img{
+        position:absolute;
+        height: 100%;
+        width: 100%;
+        top: 20%;
+        left:-20%;
+
+      }
   .name{
       font-family: 'Irish Grover', cursive;
       font-weight: bolder;
@@ -47,6 +111,9 @@
     }
     .main2{
       background-color: rgb(232, 218, 214);
+    }
+    body{
+      background-color: white;
     }
     .p1{
       font-family: "Georgia", "Times New Roman", serif; 
@@ -98,7 +165,12 @@
       content: " * :";
       color: black;
     }
-    
+    ul li a:hover {
+    color: rgb(246, 219, 170) !important;
+}
+    .bi-star-fill {
+        fill: rgb(239, 233, 79) !important;
+    }
     @media screen and (max_width:200px){
       .image1{
         width: 10px;
@@ -124,19 +196,19 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item pe-3">
-                <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                <a class="nav-link active text-white  home" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item pe-3">
-                <a class="nav-link active text-white" href="#">Service</a>
+                <a class="nav-link active text-white" href="{% url 'service' %}">Service</a>
               </li>
               <li class="nav-item pe-3">
-                <a class="nav-link active text-white " href="#" >About</a>
+                <a class="nav-link active text-white " href="{% url 'about' %}" >About</a>
               </li>
               <li class="nav-item pe-3">
-                <a class="nav-link active text-white" aria-current="page" href="#">Gallery</a>
+                <a class="nav-link active text-white" aria-current="page" href="{% url 'gallery' %}">Gallery</a>
               </li>
               <li class="nav-item pe-3">
-                <a class="nav-link active text-white" aria-current="page" href="#">Testimonials</a>
+                <a class="nav-link active text-white" aria-current="page" href="{% url 'testimonial' %}">Testimonials</a>
               </li>
               <li class="nav-item pe-3">
                 <a class="nav-link active text-white " href="{% url 'book' %}" >Book</a>
@@ -387,7 +459,7 @@
           </div>
       </div>
       </div>
-      
+      {% endblock content %}
         <div class="bg-black container-fluid pb-5">
           <div class="d-md-flex justify-content-between">
             <div class="p-5">
@@ -403,7 +475,7 @@
             <ol class="list-unstyled text-sm-center">
               <li ><a href="" class="text-decoration-none text-white ">Home</a></li>
               <li ><a href="" class="text-decoration-none text-white ">Service</a></li>
-              <li ><a href=""class="text-decoration-none text-white">About</a></li>
+              <li ><a href="" class="text-decoration-none text-white">About</a></li>
               <li ><a href="" class="text-decoration-none text-white">Gallery</a></li>
               <li ><a href="" class="text-decoration-none text-white">Testimonials</a></li>
             </ol>
@@ -453,7 +525,7 @@
             </div>
           </div>
         </footer>
-      {% endblock content %}
+      
    
 </body>
 </html>

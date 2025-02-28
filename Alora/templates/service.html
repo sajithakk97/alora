@@ -1,0 +1,39 @@
+{% extends 'alora_user.html' %}
+{% load static %}
+{% block content %}
+<div class="main2">
+    <div class="text-center mt-5 mb-5">
+        <h2>Let Us Make Your Event Shine</h2>
+    </div>
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6 d-flex justify-content-center position-relative">
+            <img src="{% static 'img/ven.png' %}" alt="Venue Image" class="img-fluid" width="70%">
+            <div class="position-absolute bottom-0 start-50 translate-middle bg-secondary text-white px-3 py-2 rounded">
+                <p class="mb-0">VENUE</p>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center position-relative">
+            <img src="{% static 'img/photo.png' %}" alt="photography Image" class="img-fluid" width="70%">
+            <div class="position-absolute bottom-0 start-50 translate-middle bg-secondary text-white px-3 py-2 rounded">
+                <p class="mb-0">PHOTOGRAPHY</p>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6 d-flex justify-content-center position-relative">
+            <img src="{% static 'img/food.png' %}" alt="caters" class="img-fluid" width="70%">
+            <div class="position-absolute bottom-0 start-50 translate-middle bg-secondary text-white px-3 py-2 rounded">
+                <p class="mb-0">CATERS</p>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center position-relative">
+            <img src="{% static 'img/deco.png' %}"  alt="decoration Image" class="img-fluid" width="70%">
+            <div class="position-absolute bottom-0 start-50 translate-middle bg-secondary text-white px-3 py-2 rounded">
+                <p class="mb-0">DECORATIONS</p>
+            </div>
+        </div>
+    </div> 
+</div>
+{% endblock content %}
